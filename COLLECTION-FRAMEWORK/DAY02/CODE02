@@ -1,1 +1,117 @@
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.ListIterator;
+
+public class DAY02 {
+    public static void main(String[] args) {
+        // add(index,type of element)
+        List<String>l1=new ArrayList<>();
+        l1.add("2");
+        l1.add("2");
+        l1.add("hi");
+        l1.add("name");
+        System.out.println(l1);
+        l1.add(3,"my");
+        System.out.println(l1);
+
+        // addAll(index,collection) function
+        List<Integer>l2=new ArrayList<>();
+        List<Integer>l3=new ArrayList<>();
+        l2.add(2);
+        l2.add(3);
+        l3.add(5);
+        System.out.println(l2.addAll(1,l3));
+        System.out.println(l2);
+
+        // E remove(index)
+        System.out.println(l1);
+        l1.remove(3);
+        System.out.println(l1.remove(2));
+        System.out.println(l1);
+
+        // E get(index)
+        System.out.println((l1));
+        System.out.println(l1.get(2));
+
+        // E set(int index,E element)
+        System.out.println(l2);
+        l2.set(1,8);
+        System.out.println(l2);
+
+        // int indexOf(object o)
+        System.out.println(l2.indexOf(8));
+        System.out.println(l2.indexOf(89));
+
+        //int lastIndexOf(object o)
+        l2.add(2);
+        System.out.println(l2.lastIndexOf(2));
+        System.out.println(l2.lastIndexOf(1));
+
+        // ListIterator<E>listIterator()
+        List<Integer>l5=new ArrayList<>();
+        l5.add(2);
+        l5.add(9);
+        l5.add(2);
+        l5.add(9);
+        l5.add(2);
+        l5.add(9);
+        Iterator<Integer>itr1=l5.iterator();
+        while(itr1.hasNext()){
+            System.out.print(itr1.next());
+        }
+        System.out.println();
+        ListIterator<Integer>itr2=l5.listIterator(l5.size());
+        while(itr2.hasPrevious()){
+            System.out.print(itr2.previous());
+        }
+        // but if we want to traverse the list from the particular index then we can do that
+
+        // one time iterator work then we have to set its value again
+        System.out.println();
+        itr2=l5.listIterator(4);
+        while(itr2.hasPrevious()){
+            System.out.print(itr2.previous());
+        }
+        System.out.println();
+        // concept of sublist(just a view of original list)
+        List<Integer>l6=new ArrayList<>();
+        l6.add(1);
+        l6.add(2);
+        l6.add(3);
+        l6.add(4);
+        l6.add(5);
+        l6.add(6);
+        System.out.println(l6.subList(3,6));
+        // here no object is created and
+        // difference in one will show in other
+
+        // we can make object by using sublist
+        List<Integer>l7=new ArrayList<>(l6.subList(3,6));
+        System.out.println(l7);
+        System.out.println();
+
+        // we want immutable list -> List.copyOf()
+        System.out.println(l1);
+        List<String>l8=List.copyOf(l1);
+        System.out.println(l8);
+        //System.out.println(l8.remove(1)); -> will give exception
+
+        // second method is List.of()
+        List<Integer>l10=List.of();
+//        l10.add(1);
+//        l10.add(2);
+//        System.out.println(l10);
+//        System.out.println(l10.remove(1));
+
+        // none of this will run as List.of() -> leads to empty list
+        // so  o modification be made in it
+
+        List<Integer>l11=List.of(1,2,3,4,5);
+        System.out.println(l11);
+        //System.out.println(l11.remove(3)); -> will give exception
+
+
+    }
+}
 
