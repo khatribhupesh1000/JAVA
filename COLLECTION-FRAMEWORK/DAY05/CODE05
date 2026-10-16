@@ -1,1 +1,51 @@
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.ListIterator;
+
+public class DAY05 {
+    public static void main(String[] args) {
+        // syntax of iterator
+        List<String>l1=new ArrayList<>(List.of("b","k","k"));
+        Iterator<String>itr1=l1.iterator();
+        while (itr1.hasNext()){
+            String str=itr1.next();
+            System.out.println(str);
+        }
+        System.out.println();
+        // syntax of listIterator
+
+        for(ListIterator<String>itr2=l1.listIterator(); itr2.hasNext();){
+            String str2= itr2.next();
+            if(str2.equals("k")){
+                itr2.add("hupesh ");
+            }
+            System.out.print(str2);
+        }
+        System.out.println();
+        System.out.println();
+        for(ListIterator<String>itr3=l1.listIterator(l1.size());itr3.hasPrevious();){
+            String s3= itr3.previous();
+            if(s3=="k"){
+                itr3.remove();
+            }
+            System.out.print(s3);
+        }
+        List<Integer>l2=new ArrayList<>(List.of(1,2,3,4,5));
+        ListIterator<Integer>i1=l2.listIterator(l2.size());
+        while(i1.hasPrevious()){
+            System.out.println("the previous element is at index="+ i1.previousIndex());
+            int num=i1.previous();
+            if(num==2){
+                i1.set(45);
+            }
+            if(num==1){
+                i1.remove();
+            }
+
+        }
+        System.out.println(l2);
+
+    }
+}
 
