@@ -1,1 +1,132 @@
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Iterator;
+import java.util.List;
 
+public class DAY04 {
+    static void add(Integer a){
+        System.out.println(a*10);
+    }
+    public static void main(String[] args) {
+
+
+// NOTE-> WHY COLLECTION WAS BUILD
+        // while traversing there is no modification which can be done
+//        System.out.println(list4);
+//        for(int c:list4){
+//            System.out.println(c);
+//            if(c==1){
+//                list4.remove(1);
+//            }
+//        }                        this will give ConcurrentModificationException
+
+//        ArrayList<Integer>a1=new ArrayList<>(List.of(1,2,3,4,5));
+//        for(int nums:a1){
+//            if(nums==1){
+//                a1.remove(Integer.valueOf(1));// in order to remove 1 object not index;
+//            }
+//            System.out.println(nums);
+//        }
+        // why it gives exception as for-each loop using internally iterator
+        // BECAUSE IT IS STRUCTURAL  change i.e. increasing or decreasing the size,
+        // but we can do modification in terms of the object
+        ArrayList<Integer> a2=new ArrayList<>(List.of(1,2,3,4,5));
+        for(int x:a2){
+            if( x==3){
+                a2.set(a2.indexOf(3),30);
+            }
+        }
+        System.out.println(a2);
+
+        // now we have to make an iterator
+
+        Iterator<Integer> itr=a2.iterator();
+        while(itr.hasNext()){
+            System.out.println(itr.next());
+        }
+        //
+        for(Iterator<Integer>itr2=a2.iterator();itr2.hasNext();){
+            int num=itr2.next();
+            if(num==30){
+                itr2.remove();
+            }
+        }
+        System.out.println(a2);
+        // in this case we will not get ConcurrentModificationException
+//-> reason is in  the notes
+
+    // note-> if the class is not having iterable interface then we can not use the explicitly
+        // for-each loop
+ // creating an object of bhupeshCollection
+    bhupeshCollection bk=new bhupeshCollection();
+//    for(String s:bk){
+//
+//    }-> this will not use directly for -each loop as this class is not implemented the iterable interface
+        for(String s:bk.getData()){// in this we can access through the class methods
+            System.out.println(s);
+        }
+//    so the class must implement the iterable interface
+        jennyLecture jl=new jennyLecture();// in this as jennyCollection implements the iterable interface so we explicitly use for-each loop
+        for(String s:jl){
+            System.out.println(s);
+        }
+
+// -> in this we can also use the lembda expression and further it can be replaced by the method refrences
+        List<Integer>l1=new ArrayList<>(List.of(1,2,3,4,5));
+        l1.forEach(n-> System.out.println(n));// in this action is performed
+        // by method refrences
+        l1.forEach(System.out::println);
+        // println-> it is a method in the string class
+        // System.out -> it is instance of class/ return object
+
+//-> as we are using now multiply in each of the elements of list -> how we do that?
+        List<Integer>l2=new ArrayList<>(List.of(1,2,3,4,5));
+        l2.forEach(DAY04::add);
+        // DAY04::add is a method reference
+
+        l2.forEach(a->DAY04.add(a));
+
+        for(Integer a:l2){
+            DAY04.add(a);
+        }
+// -> the above three statements are all equivalent
+
+        ArrayList<String>a5=new ArrayList<>(List.of("b","k","k"));
+        Iterator<String>itr2=a5.iterator();
+        while(itr2.hasNext()){
+            String str=itr2.next();
+            if(str.equals("k")){
+                itr2.remove();
+                // itr2.remove();-> it will give you exception IllegalStateException
+
+                // after the operation if we want to perform the operation of remaining elements
+                    // then forEachRemaining() method is used
+                itr2.forEachRemaining(DAY04::add);
+                // the output is k10
+            }
+        }
+    }
+
+    private static void add(String s) {
+        System.out.println(s+10);
+    }
+}
+class bhupeshCollection {
+    private String[] data={"b","k","k"};
+    public String[] getData(){
+        return data;
+    }
+}
+class jennyLecture implements Iterable<String> {
+    private String[] data = {"j", "e", "n"};
+//    public String[] getData(){
+//        return getData();
+//    }
+    // no need to use this as it is make iterable
+
+    @Override
+    public Iterator<String> iterator() {
+        return Arrays.asList(data).iterator();// conversion of the Arrays.asList()-> into objects and then iterator is applied
+    }
+
+}
