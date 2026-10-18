@@ -1,1 +1,162 @@
+import java.util.*;
+
+//comparing custom object using comparable interface
+
+
+//class Student implements Comparable<Student>{
+//    private String name;
+//    private double marks;
+//    private int rollNumber;
+//    Student(String name,double marks,int rollNumber){
+//        this.name=name;
+//        this.marks=marks;
+//        this.rollNumber=rollNumber;
+//    }
+//
+//    @Override
+//    public int compareTo(Student that) {// that is object only
+////        return this.rollNumber- that.rollNumber;// this will do comparison w.r.t rollNumber
+//        return Integer.compare(this.rollNumber, that.rollNumber);// this will do in ascending order
+//        // but if we want in descending order
+////        return Integer.compare(that.rollNumber, this.rollNumber);
+//    }
+//    @Override
+//    public String toString(){
+//        return rollNumber+" "+name+" "+marks;
+//    }
+//}
+// now class is make now make the custom objects in the main class
+
+// comparing custom objects by using  comparator
+
+class Student {
+    private String name;
+    private double marks;
+    private int rollNumber;
+    Student(String name,double marks,int rollNumber){
+        this.name=name;
+        this.marks=marks;
+        this.rollNumber=rollNumber;
+    }
+// now you have to declare the comparator in the main class
+
+
+    @Override
+    public String toString(){
+        return rollNumber+" "+name+" "+marks;
+    }
+    public int getRollNumber() {
+        return rollNumber;
+    }
+    public String getName() {
+        return name;
+    }
+}
+
+public class DAy07 {
+    public static void main(String[] args) {
+        // List.of(objects) -> will create the immutable objects which will not change
+//        List<Integer>l1=List.of(2,0,23,14,7);
+        // as sort() method is present in collection class
+//        Collections.sort(l1);
+//        System.out.println(l1);
+        // so it will give Exception
+        List<Integer>l1=new ArrayList<>(List.of(2,0,23,14,7));
+        Collections.sort(l1);// as it is importing from Collections class it will expect list only
+                            // but the concern it that the list must implements the comparable interface
+        System.out.println(l1);
+
+        // can we import sort() method from the list reference object-> List.sort()-> yes
+        // l1.sort(); in it arguments comparator will pass
+
+        // the list which will implements the comparable interface there is the compareTo() method
+        // and it will also do total ordering on the objects of each object
+
+        List<String>l2=List.of("bkk","aab","aac","baa");
+        List<String>l3=new ArrayList<>(l2);
+        // calling sort() method by using Collections class
+        Collections.sort(l3);
+        System.out.println(l3);
+        System.out.println();
+        // calling sort() method by using reference object of the List
+        //l3.sort(); -> will show error as it exception so we have to add least one comparator
+        l3.sort(null);
+        System.out.println(l3);
+        System.out.println();
+        // or we can also do
+        l3.sort(Comparator.naturalOrder());
+        System.out.println(l3);
+
+        // we gona to make a custom objects
+
+//        List<Student>studentList=List.of(new Student("bkk",98.45,32),
+//                new Student("ram",97.45,111),
+//                new Student("sham",87.23,112)
+//                );
+//// now it is immutable list to make it mutable
+//        List<Student>sl=new ArrayList<>(studentList);
+//        Collections.sort(s1);
+//        java: cannot find symbol
+//        symbol:   variable s1
+//        location: class DAy07
+        // mow this will give error as java does not know how to compare the student object
+        // which is not the case of the wrapper classes
+        // so class has to implement the comparable interface
+
+//        Collections.sort(sl);
+//        System.out.println(sl);
+
+        // this will print
+        // [Student@5b480cf9, Student@6f496d9f, Student@723279cf]
+        // it is because println will internally called toString method
+        // so we have to override the toString() method
+
+//        Collections.sort(sl);
+//        System.out.println(sl);
+        //[32 bkk 98.45, 111 ram 97.45, 112 sham 87.23]
+
+
+
+
+    List<Integer>l4=new ArrayList<>(List.of(23,1,24,54,21,56));
+    Collections.sort(l4,Collections.reverseOrder());
+        System.out.println(l4);
+// what is comparator-> it is a functional interface having one abstract method compare(obj1,obj2)
+
+        // for reverse the custom object -> second method
+//        Collections.sort(sl,Collections.reverseOrder());
+//        System.out.println(sl);
+
+        // there is  second way to create the custom objects
+
+        List<Student>studentList=List.of(new Student("bkk",98.45,32),
+                new Student("ram",97.45,111),
+                new Student("sham",87.23,112)
+        );
+// now it is immutable list to make it mutable
+        List<Student>sl=new ArrayList<>(studentList);
+
+        // now create the comparator by lembda expression -> first way
+
+        //Comparator<Student>byRollNo=(s1,s2)->Integer.compare(s1.getRollNumber(),s2.getRollNumber());
+        // now we use directly reference variable
+//        sl.sort(byRollNo);
+//        System.out.println(sl);
+
+        // now create the comparator by lembda expression -> second way
+
+//        Comparator<Student>byRollNo=Comparator.comparingInt(s->s.getRollNumber());
+//        sl.sort(byRollNo);
+//        System.out.println(sl);
+
+        Comparator<Student>byName=(s1,s2)->s1.getName().compareTo(s2.getName());
+        sl.sort(byName);
+        System.out.println(sl);
+        
+        // we can also write like
+        Collections.sort(sl,byName);
+        System.out.println(sl);
+
+}
+}
 
