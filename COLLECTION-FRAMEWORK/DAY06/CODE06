@@ -1,1 +1,72 @@
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.ListIterator;
+
+public class DAY06 {
+    public static void main(String[] args) {
+        LinkedList<Integer>ll1=new LinkedList<>();
+        ll1.add(1);
+        ll1.add(2);
+        ll1.add(3);
+        ll1.add(4);
+        ll1.add(5);
+        System.out.print(ll1);
+        System.out.println();
+        ll1.add(0,0);
+        ll1.addLast(6);
+        ll1.addFirst(-1);
+        System.out.print(ll1);
+        System.out.println();
+        LinkedList<Integer>ll2=new LinkedList<>(List.of(1,2,3,4,5));
+        System.out.print(ll2);
+        System.out.println();
+        ll2.addAll(ll1);
+        System.out.print(ll2);
+        System.out.println();
+        ll1.addAll(ll2);
+        System.out.print(ll1);
+        System.out.println();
+        ll1.removeAll(ll1);
+        System.out.print(ll1);
+        System.out.println();
+        System.out.println(ll1.poll());// if the list is empty it will not through exception as of remove()
+                                        // remove does , but it will show null
+        System.out.println();
+        System.out.println(ll2.contains(-1));
+        System.out.println();
+        // now traversing in the backward direction by descendindIterator
+        Iterator<Integer>revitr=ll2.descendingIterator();
+        while ((revitr.hasNext())){
+            System.out.println(revitr.next());
+        }
+        System.out.println();
+         // note- we use descendingIterator only in the linkedList only
+//        List<Integer>ll3=new LinkedList<>(List.of(1,2,3,4,5));
+//        Iterator<Integer>revitr2=ll3.descendingIterator();
+
+        // it is because of binding
+
+                List<Integer>ll3=new LinkedList<>(List.of(1,2,3,4,5));
+                 ListIterator<Integer>revitr2=ll3.listIterator(ll3.size());
+                 while (revitr2.hasPrevious()){
+                     int num=revitr2.previous();
+                     if(num==3){
+                         revitr2.set(1000);
+                     }
+
+                 }
+        System.out.println(ll3);
+        System.out.println();
+        // offer method -> which will add the object at the tail and return type is boolean
+        // offerFirst()-> will add the element at the first and return type is boolean
+        // offerLast()-> will add the element at the last and return type is boolean
+        // note- offer() method will internally us ethe add method inside the what is the use of the
+        //       offer method
+        //       as in it deque is used and when the deque will full it will return false
+        //       where as add() method will throw an exception
+
+        
+    }
+}
 
