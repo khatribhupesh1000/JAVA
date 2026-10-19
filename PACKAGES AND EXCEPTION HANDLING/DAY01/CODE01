@@ -1,1 +1,120 @@
+package exceptionhandling;
+
+import java.util.Scanner;
+
+public class DAY01 {
+
+//    public static void method1(){
+//        method1();
+//    }
+
+    public static void main(String[] args) {
+        //compile-time error-> a syntax error
+//        int a=10//java: ';' expected
+
+//        int b;
+//        System.out.println(b);// java: variable b might not have been initialized
+
+        // run-time error
+
+        // 1-> it is memory out of bound error
+        //int [] arr= new int[Integer.MAX_VALUE];
+        //Exception in thread "main" java.lang.OutOfMemoryError: Requested array size exceeds VM limit
+        //	at exceptionhandling.DAY01.main(DAY01.java:13)
+
+        //2-> stack overflow
+//        method1();
+
+
+        // starting of the exception handling
+//        Scanner sc=new Scanner((System.in));
+//        System.out.println("enter first number:");
+//        int num1=sc.nextInt();
+//        System.out.println("enter second number:");
+//        int num2=sc.nextInt();
+//        try {// try block will create the exception object which will further handle by the catch block
+//            int division = num1 / num2;
+//            System.out.println(division);
+//        }catch (ArithmeticException ae){
+//            // message to the use
+//            System.out.println("can not divide by zero");
+//        }
+//
+//
+
+
+//        String str=null;
+//        System.out.println(str.length());
+        //Exception in thread "main" java.lang.NullPointerException: Cannot invoke "String.length()" because "str" is null
+        //	at exceptionhandling.DAY01.main(DAY01.java:47)
+        try {
+            String str = null;
+            System.out.println(str.length());
+        } catch (ArithmeticException ae) {
+            System.out.println("it is not handled by it but handled by the super class");
+        }
+
+        catch (NullPointerException ne) {
+            System.out.println("string can not be null");
+        }
+        finally {
+            System.out.println("this is nullpointer exception so handled by the nullpointer exception" +
+                    "irrespective of the exception is present or not");
+        }
+        System.out.println("exit from the main method");
+
+        // starting with the multiple try catch blocks
+        int [] arr=new int[5];
+        Scanner sc=new Scanner(System.in);
+
+        System.out.println(" enter the elements of array");
+//        for(int i=0;i<arr.length;i++){
+//            arr[i]=sc.nextInt();
+//        }
+//        System.out.println("the printed elements are");
+//        for(int i=0;i<=arr.length;i++){
+//            System.out.println(arr[i]);
+//        }
+// Exception in thread "main" java.lang.ArrayIndexOutOfBoundsException: Index 5 out of bounds for length 5
+//	at exceptionhandling.DAY01.main(DAY01.java:75)
+        //System.out.println("end of main");// due to error last line will not work
+
+
+        try {
+            for (int i = 0; i < arr.length; i++) {
+               // arr[i] = sc.nextInt();
+                arr[i]=Integer.parseInt(sc.nextLine());
+            }
+            System.out.println("enter the number:");
+            int num= Integer.parseInt(sc.nextLine());// it will give NumberFormatException because
+            //  .nextInt() has /n and it will take by .parseInt() which leads to error
+
+            //Exception in thread "main" java.lang.NumberFormatException: For input string: ""
+            //	at java.base/java.lang.NumberFormatException.forInputString(NumberFormatException.java:67)
+            //	at java.base/java.lang.Integer.parseInt(Integer.java:672)
+            //	at java.base/java.lang.Integer.parseInt(Integer.java:778)
+            //	at exceptionhandling.DAY01.main(DAY01.java:88)
+
+            // but if we write
+//            int num=sc.nextInt();// now it will work but why?->
+
+
+            // dividing the array elements by 2
+            for(int i=0;i<arr.length;i++){
+                arr[i]=arr[i]/2;
+            }
+            System.out.println("the printed elements are");
+            for (int i = 0; i <= arr.length; i++) {
+                System.out.println(arr[i]);
+            }
+        } catch (ArrayIndexOutOfBoundsException ae) {
+            System.out.println("size of array matters");
+        } catch (NumberFormatException nfe) {
+            System.out.println("this is NumberFormatException ");
+        } catch (StringIndexOutOfBoundsException se) {
+            System.out.println("this is StringIndexOutOfBoundsException");
+        }
+
+    }
+}
 
