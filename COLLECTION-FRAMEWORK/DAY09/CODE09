@@ -1,1 +1,105 @@
+import java.util.Comparator;
+import java.util.List;
+import java.util.PriorityQueue;
+import java.util.Queue;
+
+public class DAY09 {
+    public static void main(String[] args) {
+        // for the integers
+        Queue<Integer>pq1=new PriorityQueue<>(List.of(1,2,3,4,5));
+        pq1.add(6);
+        System.out.println(pq1);
+        pq1.remove();
+        System.out.println(pq1);
+        System.out.println("polling elements");
+        while (!pq1.isEmpty()){
+            System.out.println(pq1.poll());
+        }
+        System.out.println(pq1);
+        // for string
+        List<String>l1=List.of("bkk","skk","nkk","mkk","akk");
+        Queue<String>pq2=new PriorityQueue<>(l1);
+        System.out.println(pq2);
+        System.out.println("polling elements");
+        while ((!pq2.isEmpty())){
+            System.out.println(pq2.poll());
+        }
+        System.out.println(pq2);
+        // note -> both of this implementation uses the min heap concept
+        //         if we have to use the max heap concept then we have
+        //          to pass the comparator -> comparator.reverseOrder()
+        Queue<Integer>pq3=new PriorityQueue<>(Comparator.reverseOrder());
+        pq3.add(1);
+        pq3.add(2);
+        pq3.add(3);
+        pq3.add(4);
+        pq3.add(5);
+        System.out.println(pq3);
+        pq3.remove();
+        System.out.println(pq3);
+        System.out.println("polling elements");
+        while (!pq3.isEmpty()){
+            System.out.println(pq3.poll());
+        }
+        System.out.println(pq3);
+
+        // now we have to us priority queue for the custom objects
+
+//        Queue<employee>pq4=new PriorityQueue<>();
+//        pq4.add(new employee(1,"bkk"));
+//        pq4.add(new employee(2,"skk"));
+//        pq4.add(new employee(3,"mkk"));
+//        pq4.add(new employee(4,"nkk"));
+
+        // System.out.println(pq4);-> it will show you Exception in thread "main" java.lang.ClassCastException: class employee cannot be cast to class java.lang.Comparable (employee is in unnamed module of loader 'app'; java.lang.Comparable is in module java.base of loader 'bootstrap')
+        //	at java.base/java.util.PriorityQueue.siftUpComparable(PriorityQueue.java:643)
+        //	at java.base/java.util.PriorityQueue.siftUp(PriorityQueue.java:639)
+        //	at java.base/java.util.PriorityQueue.offer(PriorityQueue.java:330)
+        //	at java.base/java.util.PriorityQueue.add(PriorityQueue.java:311)
+        //	at DAY09.main(DAY09.java:49)
+
+        // it is because the java does not know how to compare the custom objects
+        // so first comparator should be made
+        Comparator<employee>comp1=(e1,e2)->Integer.compare(e1.getEmpId(), e2.getEmpId());
+        Queue<employee>pq4=new PriorityQueue<>(comp1.reversed());
+        pq4.add(new employee(1,"bkk"));
+        pq4.add(new employee(2,"skk"));
+        pq4.add(new employee(3,"mkk"));
+        pq4.add(new employee(4,"nkk"));
+        System.out.println(pq4);
+        // it will compare on the basis of the id in the reversed order
+
+        // if we want to compare on behalf of the name in then
+        Comparator<employee>comp2=(a1,a2)->a1.getName().compareToIgnoreCase(a2.getName());
+        Queue<employee>pq5=new PriorityQueue<>(comp2);
+        pq5.add(new employee(1,"bkk"));
+        pq5.add(new employee(2,"skk"));
+        pq5.add(new employee(3,"mkk"));
+        pq5.add(new employee(4,"nkk"));
+        System.out.println(pq5);
+
+
+
+
+    }
+}
+class employee{
+    private String name;
+    private int empId;
+    employee(int empId,String name){
+        this.empId=empId;
+        this.name=name;
+    }
+
+    public int getEmpId() {
+        return empId;
+    }
+    public String getName(){
+        return name;
+    }
+    @Override
+    public String toString(){
+        return empId+" "+name;
+    }
+}
 
