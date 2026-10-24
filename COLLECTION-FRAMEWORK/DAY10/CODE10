@@ -1,1 +1,96 @@
+import java.util.HashSet;
+import java.util.Objects;
 
+public class DAY10 {
+    public static void main(String[] args) {
+        HashSet<Integer>h1=new HashSet<>();
+        h1.add(1);
+        h1.add(2);
+        h1.add(6);
+        h1.add(0);
+        System.out.println(h1);
+        // in set the ordered is not guaranteed
+        h1.remove(6);
+        System.out.println(h1);
+        // rest all methods are same
+
+        // what if we want to make the custom objects
+        //  and through it we can see how to override the equals() method and hashcode() method
+        HashSet<Customer>h2=new HashSet<>();
+        Customer c1=(new Customer("bkk",1));
+
+        Customer c2=((new Customer("skk",2)));
+        Customer c3=(new Customer("akk",3));
+        Customer c4=(new Customer("mkk",4));
+        System.out.println(h2);
+        // what will happen when i just do copy one object
+        Customer c5=(new Customer("bkk",1));
+        System.out.println(h2);
+        //[akk 3, mkk 4, bkk 1, skk 2, bkk 1]
+        // but how duplicate value is there?
+        // as we jvm import equals and hashcode methods from object class
+        // but there are two different objects are created so the hashcode method only give the
+        // hashcode according to the memory references of the objects
+
+        // note-> due to the above problem we have to override the equals() and hashcode() methods
+        // note-> if two objects are equal then hashcode must be same but vice versa is not true
+        //      as if the hash values are same then it may be the possibility that the objects having same
+        //      index but there must be extenstion of linkedlist through chaining
+        // and the equals and hashcode methods should be consistent with each other
+
+        // now the problem is solved
+        // [skk 2, mkk 4, bkk 1, akk 3]
+        // but now also the equals method is not correct
+        // @Override
+        //    public boolean equals(Object obj) {
+        //        Customer that = (Customer) obj; // type casting Object to Customer
+        //        return this.CustName.equals(that.CustName) && this.CustId == that.CustId;
+        //    }
+
+        String str="bkk";
+        System.out.println(c1.equals(str)); // false
+        System.out.println(c1.equals(c5)); // true -> it is because
+        // return this.CustName.equals(that.CustName) && this.CustId == that.CustId; this line
+        // a the object are different but the name and id are same so return ing true
+        System.out.println(c1.equals(c1));// true due to having same memeory address by
+        //if(this==obj) return true; -> this line
+
+
+    }
+}
+class Customer {
+    private String CustName;
+    private int CustId;
+
+    Customer(String CustName, int CustId) {
+        this.CustName = CustName;
+        this.CustId = CustId;
+
+    }
+
+    public String getCustName() {
+        return CustName;
+    }
+
+    public int getCustId() {
+        return CustId;
+    }
+
+    @Override
+    public String toString() {
+        return CustName + " " + CustId;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(CustName, CustId);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(this==obj) return true;
+        if(!(obj instanceof Customer)) return false;
+        Customer that = (Customer) obj; // type casting Object to Customer
+        return this.CustName.equals(that.CustName) && this.CustId == that.CustId;
+    }
+}
