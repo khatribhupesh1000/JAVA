@@ -1,1 +1,47 @@
+package exceptionhandling;
+
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+
+public class DAY02 {
+    public static void main(String[] args) {
+        try {
+            FileReader file = new FileReader("myfile.txt");
+        } catch (FileNotFoundException e) {
+            System.out.println("file not found");
+            System.out.println("file is not "+e);
+            System.out.println("file is not"+e.toString());
+            System.out.println("file is not"+e.getMessage());
+        }
+        // as FileNotFound exception is the check exception as it is checked at the compile time
+        // note-> exception object contains many methods but the default method is toString() method
+
+        // printStackTrace() method->
+        greet();
+        // java.lang.NullPointerException: Cannot invoke "String.length()" because "string" is null
+        //	at exceptionhandling.DAY02.display(DAY02.java:26)
+        //	at exceptionhandling.DAY02.greet(DAY02.java:33)
+        //	at exceptionhandling.DAY02.main(DAY02.java:20)
+
+        // note-> why we use printStackTrace() method
+        // it is because it also give or run
+//        end of display
+//        end of greet
+        // so the program not crash
+
+    }
+    public static void display(){
+        try{
+            String string=null;
+            System.out.println(string.length());
+        }catch (NullPointerException ne){
+            ne.printStackTrace();
+        }
+        System.out.println("end of display");
+    }
+    public static void greet(){
+        display();
+        System.out.println("end of greet");
+    }
+}
 
