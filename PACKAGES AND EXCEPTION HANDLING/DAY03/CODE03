@@ -1,1 +1,79 @@
+package exceptionhandling;
+
+public class DAY03 {
+//    public static void main(String[] args) {
+//        method1();
+//    }
+//    static void method1(){
+//        method2();
+//    }
+//    static void method2(){
+//        int a=5,b=0;
+//        System.out.println(a/b);
+//    }
+    // as it is unchecked exception so no need to explicitly write throws
+    // on the method signature as it is managed by jvm and then it uses printStackTree() method to show
+
+    //Exception in thread "main" java.lang.ArithmeticException: / by zero
+    //	at exceptionhandling.DAY03.method2(DAY03.java:12)
+    //	at exceptionhandling.DAY03.method1(DAY03.java:8)
+    //	at exceptionhandling.DAY03.main(DAY03.java:5)
+
+
+//    public static void main(String[] args) {
+//        try {
+//            method1();
+//        } catch (ArithmeticException e) {
+//            System.out.println("b can not be 0");
+//        }
+//    }
+//    static void method1(){
+//        method2();
+//    }
+//    static void method2(){
+//        int a=5,b=0;
+//        System.out.println(a/b);
+//    }
+
+    // the sequence of flow method calling
+    // 1-> main()
+    // 2-> method1()
+    // 3-> method2()
+
+    // in method2() exception occurs and method2() need not to write the throws keyword
+    // as it is unchecked exception
+
+    // from there it will check whether it can catch the the exception if not
+    // then the exception is automatically propagate to the calling method
+    // it is called the EXCEPTION PROPAGATION
+
+    // method of flow of exception
+    // 1-> method2() -> where the exception occurs and it does not have catch capabilities
+    // 2-> method1()
+    // 3-> main()
+    // 4-> jvm catches it and use the printStackTree() method -> program crash
+
+    // lets make it checked exception
+
+    public static void main(String[] args) {
+        try {
+            method1();
+        } catch (Exception e) {
+            System.out.println("b can not be 0");
+        }
+    }
+    static void method1() throws Exception{
+        method2();
+    }
+    static void method2() throws Exception{
+        int a=5,b=0;
+        if(b==0){
+            throw new Exception("b can not be 0");// it become checked exception because we use
+                                                    // Exception which has checked and unchecked 
+                                                    // exception
+        }
+        System.out.println(a/b);
+    }
+
+}
 
