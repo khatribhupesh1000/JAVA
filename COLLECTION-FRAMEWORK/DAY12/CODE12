@@ -1,1 +1,158 @@
+import java.util.*;
 
+public class DAY12 {
+    public static void main(String[] args) {
+        NavigableSet<Integer>set=new TreeSet<>();
+        set.add(2);
+        set.add(-1);
+        set.add(0);
+        set.add(1);
+        set.add(-4);
+        System.out.println(set);
+        // it is arrange in the ascending order
+        System.out.println(set.ceiling(0));// >=least element
+        System.out.println(set.floor(0));// <= greatest element
+        System.out.println(set.lower(0));//< greatest element
+        System.out.println(set.higher(0));//> least element
+        System.out.println(set.pollFirst());
+        System.out.println(set.pollLast());
+        System.out.println(set);
+
+        //range view method
+        SortedSet<Integer> sortedset=set.subSet(-1,0);
+        System.out.println(sortedset);
+        sortedset.add(-1);
+        System.out.println(sortedset);
+//        sortedset.add(0);
+//        System.out.println(sortedset);
+        // Exception in thread "main" java.lang.IllegalArgumentException: key out of range
+        //	at java.base/java.util.TreeMap$NavigableSubMap.put(TreeMap.java:1830)
+        //	at java.base/java.util.TreeSet.add(TreeSet.java:259)
+        //	at DAY12.main(DAY12.java:28)
+
+        // as it give exception because we add element out of range -1
+
+        SortedSet<Integer> sortedset2=set.subSet(-1,1);
+        System.out.println(sortedset2);
+        sortedset2.add(-1);
+        System.out.println(sortedset2);
+        sortedset2.add(0);
+        System.out.println(sortedset2);
+        // now the element is added and it is within this range  so it is not showing the error
+        SortedSet<Integer> sortedheadset=set.headSet(0);
+        System.out.println(sortedheadset);
+
+        SortedSet<Integer> sortedheadset2=set.tailSet(0);
+        System.out.println(sortedheadset2);
+
+        // descending set
+
+        System.out.println(set.descendingSet());
+
+
+        // basis of treeset
+        List<String>s1= List.of("bkk","skk","rkk","pkk","akk");
+        TreeSet<String>t1=new TreeSet<>(s1);
+        System.out.println(t1);
+
+        // custom objects
+
+        // make the objects of the book class
+        Book b1=new Book("bkk","history",1);
+        Book b2=new Book("skk","commerce",2);
+        Book b3=new Book("akk","geo",3);
+
+//        TreeSet<Book>t2=new TreeSet<>();
+//        t2.add(b1);
+//        t2.add(b2);
+//        t2.add(b3);
+//        System.out.println(t2);
+
+        // it will give ClassCast exception
+        // because java does not know how to compare the objects of the Book class
+
+        // Exception in thread "main" java.lang.ClassCastException: class Book cannot be cast to class java.lang.Comparable (Book is in unnamed module of loader 'app'; java.lang.Comparable is in module java.base of loader 'bootstrap')
+        //	at java.base/java.util.TreeMap.compare(TreeMap.java:1604)
+        //	at java.base/java.util.TreeMap.addEntryToEmptyMap(TreeMap.java:811)
+        //	at java.base/java.util.TreeMap.put(TreeMap.java:820)
+        //	at java.base/java.util.TreeMap.put(TreeMap.java:569)
+        //	at java.base/java.util.TreeSet.add(TreeSet.java:259)
+        //	at DAY12.main(DAY12.java:65)
+
+
+        // implementing comparable interface
+
+        Comparator<Book>byTitle=(a1,a2)->a1.getTitle().compareTo(a2.getTitle());
+        TreeSet<Book>t3=new TreeSet<>(byTitle);
+        t3.add(b1);
+        t3.add(b2);
+        t3.add(b3);
+
+        System.out.println(t3);
+
+    }
+}
+
+
+// this for natural ordering(comparator)
+
+//class Book implements Comparable<Book>{
+//    private String author;
+//    private String title;
+//    private int bookId;
+//    Book(String author,String title,int bookId){
+//        this.author=author;
+//        this.title=title;
+//        this.bookId=bookId;
+//    }
+//    public String getAuthor(){
+//        return author;
+//    }
+//    public String getTitle(){
+//        return title;
+//    }
+//    public int getBookId(){
+//        return bookId;
+//    }
+//    @Override
+//    public String toString(){
+//        return author+" "+ title+ " "+bookId;
+//    }
+//
+////    @Override
+////    public int compareTo(Book that) {
+////        return Integer.compare(this.getBookId(), that.getBookId());
+////    }
+//@Override
+//public int compareTo(Book that) {
+//    return this.getTitle().compareTo(that.getTitle());
+//}
+//}
+
+class Book {
+    private String author;
+    private String title;
+    private int bookId;
+
+    Book(String author, String title, int bookId) {
+        this.author = author;
+        this.title = title;
+        this.bookId = bookId;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public int getBookId() {
+        return bookId;
+    }
+    @Override
+    public String toString(){
+        return author+" "+ title+ " "+bookId;
+    }
+}
